@@ -47,10 +47,6 @@ addBookToLibrary = (book, library) => {
   library.push(book);
 };
 
-removeBook = (book) => {
-
-};
-
 getFormData = () => {
   let newBookTitle = newBookForm.elements['bookTitleInput'].value;
   let newBookAuthor = newBookForm.elements['bookAuthorInput'].value;
@@ -74,7 +70,7 @@ showCardModal = (card) => {
 
   const modalBody = getModalBody(card);
 
-  const modalFooter = getModalFooter();
+  const modalFooter = getModalFooter(card);
   
   modalContent.append(modalHeader, modalBody, modalFooter);
 };
@@ -99,10 +95,11 @@ getModalHeader = (card) => {
 getCloseBtn = () => {
   const closeBtn = document.createElement('button');
 
-  closeBtn.classList.add('close')
-  closeBtn.setAttribute('data-dismiss', 'modal')
-  closeBtn.style.color = 'black'
-  closeBtn.textContent = 'x'
+  closeBtn.classList.add('close');
+  closeBtn.setAttribute('data-dismiss', 'modal');
+  closeBtn.style.color = 'black';
+  closeBtn.textContent = 'x';
+  closeBtn.id = 'infoCloseBtn';
 
   return closeBtn
 };
@@ -124,7 +121,7 @@ getModalBody = (card) => {
   return modalBody;
 };
 
-getModalFooter = () => {
+getModalFooter = (card) => {
   const modalFooter = document.createElement('div');
   modalFooter.classList.add('modal-footer')
   modalFooter.style.borderTop = '1px solid #343a40'
@@ -132,14 +129,41 @@ getModalFooter = () => {
   const editBtn = document.createElement('button');
   editBtn.classList.add('btn', 'btn-info');
   editBtn.textContent = 'Edit book';
+  editBtn.addEventListener('click', () => editBook(card));
 
   const removeBtn = document.createElement('button');
   removeBtn.classList.add('btn', 'btn-danger');
   removeBtn.textContent = 'Remove book';
+  removeBtn.addEventListener('click', () => removeBook(card));
 
   modalFooter.append(editBtn, removeBtn);
 
   return modalFooter;
+};
+
+changeReadStatus = (card) => {
+
+};
+
+editBook = (card) => {
+  const addBookForm = document.getElementById('add-book-btn');
+  const closeBtn = document.getElementById('infoCloseBtn');
+  closeBtn.click();
+  addBookForm.click();
+};
+
+removeBook = (card) => {
+  const infoModal = document.getElementById('bookInfoModal');
+  let deleteBook = window.confirm('Are you sure?');
+  if (deleteBook) {
+    let libIndex = myLibrary.indexOf(card.book);
+    let cardsIndex = bookCards.indexOf(card);
+    if (libIndex > -1) myLibrary.splice(libIndex, 1);
+    if (cardsIndex > -1) bookCards.splice(cardsIndex, 1);
+
+    card.element.remove();
+    infoModal.click();
+  };
 };
 
 
