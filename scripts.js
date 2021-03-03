@@ -65,40 +65,35 @@ listBooks = (library) => {
 };
 
 showCardModal = (card) => {
-  console.log('made it here')
+  
   const modalDiv = document.getElementById('bookInfoModal');
   const modalDialog = modalDiv.children[0];
   const modalContent = modalDialog.children[0];
 
+  modalContent.innerHTML = ''
+
   const modalHeader = document.createElement('div');
   const modalTitle = document.createElement('h5');
+  
+  modalHeader.classList.add('modal-header');
+  
+  modalTitle.classList.add('modal-title');
+  modalTitle.textContent = card.book.title;
 
   const modalBody = document.createElement('div');
   
-  console.log(modalContent)
+  const para = document.createElement('p');
+
+  para.style.margin = '4px'
+  para.textContent = 'Written by ' + card.book.author
+  
+  modalBody.append(para)
 
   const closeBtn = document.createElement('button');
   const submitBtn = document.createElement('button');
 
-  modalDiv.classList.add('modal', 'fade');
-  modalDiv.style.role = 'dialog';
-
-  modalDialog.classList.add('modal-dialog');
-
-  modalContent.classList.add('modal-content');
-
-  modalHeader.classList.add('modal-header');
-
-  modalTitle.classList.add('modal-title');
-  modalTitle.textContent = card.book.title;
-
   modalHeader.append(modalTitle, closeBtn);
-
-
-
-  modalDialog.append(modalContent);
-  modalDiv.append(modalDialog);
-  libContainer.append(modalDiv);
+  modalContent.append(modalHeader, modalBody);
 };
 
 
