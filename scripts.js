@@ -35,10 +35,7 @@ function BookContainer(book) {
 
   this.element = newDiv;
 
-  this.element.addEventListener('mousedown', () => {
-    console.log('card clicked')
-    showCardModal(this);
-  });
+  this.element.addEventListener('mousedown', () => showCardModal(this));
 
   bookCards.push(this)
 }
@@ -50,12 +47,17 @@ addBookToLibrary = (book, library) => {
   library.push(book);
 };
 
+removeBook = (book) => {
+
+};
+
 getFormData = () => {
   let newBookTitle = newBookForm.elements['bookTitleInput'].value;
   let newBookAuthor = newBookForm.elements['bookAuthorInput'].value;
   let newBookNumPages = newBookForm.elements['bookNumOfPagesInput'].value;
   let newBook = new Book(newBookTitle, newBookAuthor, newBookNumPages);
   addBookToLibrary(newBook, myLibrary);
+  newBookForm.reset()
 }
 
 listBooks = (library) => {
@@ -65,41 +67,85 @@ listBooks = (library) => {
 };
 
 showCardModal = (card) => {
-  
-  const modalDiv = document.getElementById('bookInfoModal');
-  const modalDialog = modalDiv.children[0];
-  const modalContent = modalDialog.children[0];
-
+  const modalContent = document.getElementById('bookInfoModal').children[0].children[0];
   modalContent.innerHTML = ''
 
+  const modalHeader = getModalHeader(card);
+
+  const modalBody = getModalBody(card);
+
+  const modalFooter = getModalFooter();
+  
+  modalContent.append(modalHeader, modalBody, modalFooter);
+};
+
+getModalHeader = (card) => {
   const modalHeader = document.createElement('div');
   const modalTitle = document.createElement('h5');
+
+  const closeBtn = getCloseBtn();
   
   modalHeader.classList.add('modal-header');
+  modalHeader.style.borderBottom = '1px solid #343a40'
   
   modalTitle.classList.add('modal-title');
   modalTitle.textContent = card.book.title;
+  
+  modalHeader.append(modalTitle, closeBtn);
 
+  return modalHeader;
+};
+
+getCloseBtn = () => {
+  const closeBtn = document.createElement('button');
+
+  closeBtn.classList.add('close')
+  closeBtn.setAttribute('data-dismiss', 'modal')
+  closeBtn.style.color = 'black'
+  closeBtn.textContent = 'x'
+
+  return closeBtn
+};
+
+getModalBody = (card) => {
   const modalBody = document.createElement('div');
   
-  const para = document.createElement('p');
+  const authorPara = document.createElement('p');
+  const pagesPara = document.createElement('p');
 
-  para.style.margin = '4px'
-  para.textContent = 'Written by ' + card.book.author
+  authorPara.style.margin = '4px';
+  authorPara.textContent = 'Written by ' + card.book.author;
+
+  pagesPara.style.margin = '4px';
+  pagesPara.textContent = card.book.pages + ' pages long';
   
-  modalBody.append(para)
+  modalBody.append(authorPara, pagesPara);
 
-  const closeBtn = document.createElement('button');
-  const submitBtn = document.createElement('button');
+  return modalBody;
+};
 
-  modalHeader.append(modalTitle, closeBtn);
-  modalContent.append(modalHeader, modalBody);
+getModalFooter = () => {
+  const modalFooter = document.createElement('div');
+  modalFooter.classList.add('modal-footer')
+  modalFooter.style.borderTop = '1px solid #343a40'
+
+  const editBtn = document.createElement('button');
+  editBtn.classList.add('btn', 'btn-info');
+  editBtn.textContent = 'Edit book';
+
+  const removeBtn = document.createElement('button');
+  removeBtn.classList.add('btn', 'btn-danger');
+  removeBtn.textContent = 'Remove book';
+
+  modalFooter.append(editBtn, removeBtn);
+
+  return modalFooter;
 };
 
 
-addBookToLibrary(new Book('The Tales of The Lost', 'Alfred', 420), myLibrary)
-addBookToLibrary(new Book('This Is Harder Than I Thought', 'Unknown', 69), myLibrary)
-addBookToLibrary(new Book('How Did it Get This Far?', 'A Wise Man', 1337), myLibrary)
+addBookToLibrary(new Book('A Song of Ice and Fire', 'George R. R. Martin', 413), myLibrary)
+addBookToLibrary(new Book('The Hobbit', 'J. R. R. Tolkien', 354), myLibrary)
+addBookToLibrary(new Book('Foundation', 'Isaac Asimov', 256), myLibrary)
 
 
 listBooks(myLibrary)
