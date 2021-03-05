@@ -133,6 +133,8 @@ getCloseBtn = () => {
 getModalBody = (card) => {
   const modalBody = document.createElement('div');
   
+  modalBody.classList.add('modal-body');
+
   const authorPara = document.createElement('p');
   const pagesPara = document.createElement('p');
 
