@@ -75,6 +75,21 @@ showCardModal = (card) => {
   modalContent.append(modalHeader, modalBody, modalFooter);
 };
 
+showEditBookModal = (card) => {
+  const editBookModal = document.getElementById('newBookModal').cloneNode(true);
+  const modalDialog = editBookModal.children[0];
+  const modalContent = modalDialog.children[0];
+
+  editBookModal.id = 'editBookModal';
+  editBookModal.classList.add('show');
+  editBookModal.style.display = 'block';
+  editBookModal.removeAttribute('aria-hidden')
+  console.log(editBookModal, modalDialog, modalContent);
+  console.log(modalContent.children);
+
+  libContainer.append(editBookModal);
+};
+
 getModalHeader = (card) => {
   const modalHeader = document.createElement('div');
   const modalTitle = document.createElement('h5');
@@ -149,7 +164,7 @@ editBook = (card) => {
   const addBookForm = document.getElementById('add-book-btn');
   const closeBtn = document.getElementById('infoCloseBtn');
   closeBtn.click();
-  addBookForm.click();
+  showEditBookModal(card);
 };
 
 removeBook = (card) => {
