@@ -52,6 +52,7 @@ getFormData = () => {
   let newBookAuthor = newBookForm.elements['bookAuthorInput'].value;
   let newBookNumPages = newBookForm.elements['bookNumOfPagesInput'].value;
   let newBook = new Book(newBookTitle, newBookAuthor, newBookNumPages);
+  
   addBookToLibrary(newBook, myLibrary);
   newBookForm.reset()
 }
@@ -75,8 +76,12 @@ showCardModal = (card) => {
   modalContent.append(modalHeader, modalBody, modalFooter);
 };
 
-showEditBookModal = (card) => {
+fillEditBookForm = (card) => {
+  const editBookForm = document.forms['editBookForm'];
   
+  editBookForm.elements['editBookTitleInput'].value = card.book.title;
+  editBookForm.elements['editBookAuthorInput'].value = card.book.author;
+  editBookForm.elements['editBookPagesInput'].value = card.book.pages;
 };
 
 getModalHeader = (card) => {
@@ -167,7 +172,7 @@ changeReadStatus = (card) => {
 editBook = (card) => {
   document.getElementById('infoCloseBtn').click();
   
-  showEditBookModal(card);
+  fillEditBookForm(card);
 };
 
 removeBook = (card) => {
