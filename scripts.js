@@ -1,6 +1,8 @@
 const libContainer = document.getElementById('lib-container');
 const bookContainer = document.getElementById('book-card-container');
 const newBookForm = document.forms["newBookForm"];
+const editBookForm = document.forms['editBookForm'];
+let cardToEdit;
 
 let myLibrary = [];
 let bookCards = [];
@@ -31,18 +33,19 @@ function BookContainer(book) {
   bookAuthor.textContent = book.author;
   bookAuthor.classList.add('card-text');
   
-  bookContainer.append(newDiv);
-
   this.element = newDiv;
-
-  this.element.addEventListener('mousedown', () => showCardModal(this));
-
-  bookCards.push(this)
 }
 
 addBookToLibrary = (book, library) => {
-  new BookContainer(book)
+  let newBookCard = new BookContainer(book)
 
+  newBookCard.element.addEventListener('mousedown', () => {
+    showCardModal(newBookCard);
+  });
+
+  bookContainer.append(newBookCard.element);
+
+  bookCards.push(newBookCard)
   book.index = library.length;
   library.push(book);
 };
@@ -76,12 +79,26 @@ showCardModal = (card) => {
   modalContent.append(modalHeader, modalBody, modalFooter);
 };
 
-fillEditBookForm = (card) => {
-  const editBookForm = document.forms['editBookForm'];
-  
+fillEditBookForm = (card) => { 
   editBookForm.elements['editBookTitleInput'].value = card.book.title;
   editBookForm.elements['editBookAuthorInput'].value = card.book.author;
   editBookForm.elements['editBookPagesInput'].value = card.book.pages;
+
+  cardToEdit = card
+};
+
+getEditFormData = () => {
+  let editedBookTitle = editBookForm.elements['editBookTitleInput'].value;
+  let editedBookAuthor = editBookForm.elements['editBookAuthorInput'].value;
+  let editedBookPages = editBookForm.elements['editBookPagesInput'].value;
+
+  cardToEdit.book.title = editedBookTitle;
+  cardToEdit.element.children[0].textContent = editedBookTitle;
+  cardToEdit.book.author = editedBookAuthor;
+  cardToEdit.element.children[1].textContent = editedBookAuthor;
+  cardToEdit.book.pages = editedBookPages;
+  
+  bookCards.push(cardToEdit)
 };
 
 getModalHeader = (card) => {
