@@ -57,6 +57,31 @@
       </div>
     </div>
   </div>
+  <div id="editBookModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background-color: rgb(112, 128, 144);">
+        <div class="modal-header">
+          <h4 class="modal-title">Edit Book</h4>
+          <button type="button" class="close" data-dismiss="modal" style="color: black;">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form name="editBookForm" action="#" onsubmit="return false">
+            <div class="form-group">
+              <label for="editBookTitleInput">Title</label>
+              <input type='text' class="form-control" id="editBookTitleInput" placeholder="Enter title.." required>
+              <label for="editBookAuthorInput">Author</label>
+              <input type='text' class="form-control" id="editBookAuthorInput" placeholder="Enter author.." required>
+              <label for="editBookNumOfPagesInput">Number of pages</label>
+              <input type='text' class="form-control" id="editBookNumOfPagesInput" placeholder="Enter number of pages.."
+                required>
+            </div>
+            <button type="submit" class="btn btn-dark" id="editFormSubmit" onclick="getFormData();"
+              data-dismiss="modal">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>

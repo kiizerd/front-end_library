@@ -76,18 +76,7 @@ showCardModal = (card) => {
 };
 
 showEditBookModal = (card) => {
-  const editBookModal = document.getElementById('newBookModal').cloneNode(true);
-  const modalDialog = editBookModal.children[0];
-  const modalContent = modalDialog.children[0];
-
-  editBookModal.id = 'editBookModal';
-  editBookModal.classList.add('show');
-  editBookModal.style.display = 'block';
-  editBookModal.removeAttribute('aria-hidden')
-  console.log(editBookModal, modalDialog, modalContent);
-  console.log(modalContent.children);
-
-  libContainer.append(editBookModal);
+  
 };
 
 getModalHeader = (card) => {
@@ -141,19 +130,34 @@ getModalFooter = (card) => {
   modalFooter.classList.add('modal-footer')
   modalFooter.style.borderTop = '1px solid #343a40'
 
-  const editBtn = document.createElement('button');
-  editBtn.classList.add('btn', 'btn-info');
-  editBtn.textContent = 'Edit book';
-  editBtn.addEventListener('click', () => editBook(card));
-
-  const removeBtn = document.createElement('button');
-  removeBtn.classList.add('btn', 'btn-danger');
-  removeBtn.textContent = 'Remove book';
-  removeBtn.addEventListener('click', () => removeBook(card));
+  const editBtn = getEditBtn(card);
+  const removeBtn = getRemoveBtn(card);
 
   modalFooter.append(editBtn, removeBtn);
 
   return modalFooter;
+};
+
+getEditBtn = (card) => {
+  const editBtn = document.createElement('button');
+
+  editBtn.classList.add('btn', 'btn-info');
+  editBtn.textContent = 'Edit book';
+  editBtn.addEventListener('click', () => editBook(card));
+  editBtn.setAttribute('data-toggle', 'modal');
+  editBtn.setAttribute('data-target', '#editBookModal');
+
+  return editBtn;
+};
+
+getRemoveBtn = (card) => {
+  const removeBtn = document.createElement('button');
+  
+  removeBtn.addEventListener('click', () => removeBook(card));
+  removeBtn.classList.add('btn', 'btn-danger');
+  removeBtn.textContent = 'Remove book';
+  
+  return removeBtn;
 };
 
 changeReadStatus = (card) => {
@@ -161,9 +165,8 @@ changeReadStatus = (card) => {
 };
 
 editBook = (card) => {
-  const addBookForm = document.getElementById('add-book-btn');
-  const closeBtn = document.getElementById('infoCloseBtn');
-  closeBtn.click();
+  document.getElementById('infoCloseBtn').click();
+  
   showEditBookModal(card);
 };
 
