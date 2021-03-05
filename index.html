@@ -3,6 +3,9 @@
 
 <head>
   <meta charset="utf-8">
+  <title>My Library</title>
+  <link rel='icon' type="img/png" href="open-book.png">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -36,12 +39,12 @@
             <form name="newBookForm" action="#" onsubmit="return false">
               <div class="form-group">
                 <label for="bookTitleInput">Title</label>
-                <input type='text' class="form-control" id="bookTitleInput" placeholder="Enter title.." required>
+                <input type='text' class="form-control" id="bookTitleInput" placeholder="Enter title.." required=''>
                 <label for="bookAuthorInput">Author</label>
-                <input type='text' class="form-control" id="bookAuthorInput" placeholder="Enter author.." required>
+                <input type='text' class="form-control" id="bookAuthorInput" placeholder="Enter author.." required=''>
                 <label for="bookNumOfPagesInput">Number of pages</label>
-                <input type='text' class="form-control" id="bookNumOfPagesInput" placeholder="Enter number of pages.."
-                  required>
+                <input type='number' class="form-control" id="bookNumOfPagesInput" placeholder="Enter number of pages.."
+                  required=''>
               </div>
               <button type="submit" class="btn btn-dark" id="formSubmit" onclick="getFormData();"
                 data-dismiss="modal">Submit</button>
