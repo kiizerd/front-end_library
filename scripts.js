@@ -7,7 +7,7 @@ let cardToEdit;
 let myLibrary = [];
 let bookCards = [];
 
-function Book(title, author, pages, beenRead) {
+function Book(title, author, pages, beenRead = false) {
   this.title = title;
   this.author = author;
   this.pages = pages;
@@ -58,25 +58,6 @@ getFormData = () => {
   
   addBookToLibrary(newBook, myLibrary);
   newBookForm.reset()
-}
-
-listBooks = (library) => {
-  for (let book in library) {
-    console.log(library[book])
-  }
-};
-
-showCardModal = (card) => {
-  const modalContent = document.getElementById('bookInfoModal').children[0].children[0];
-  modalContent.innerHTML = ''
-
-  const modalHeader = getModalHeader(card);
-
-  const modalBody = getModalBody(card);
-
-  const modalFooter = getModalFooter(card);
-  
-  modalContent.append(modalHeader, modalBody, modalFooter);
 };
 
 fillEditBookForm = (card) => { 
@@ -99,6 +80,25 @@ getEditFormData = () => {
   cardToEdit.book.pages = editedBookPages;
   
   bookCards.push(cardToEdit)
+};
+
+listBooks = (library) => {
+  for (let book in library) {
+    console.log(library[book])
+  }
+};
+
+showCardModal = (card) => {
+  const modalContent = document.getElementById('bookInfoModal').children[0].children[0];
+  modalContent.innerHTML = ''
+
+  const modalHeader = getModalHeader(card);
+
+  const modalBody = getModalBody(card);
+
+  const modalFooter = getModalFooter(card);
+  
+  modalContent.append(modalHeader, modalBody, modalFooter);
 };
 
 getModalHeader = (card) => {
@@ -149,25 +149,54 @@ getModalBody = (card) => {
 
 getModalFooter = (card) => {
   const modalFooter = document.createElement('div');
-  modalFooter.classList.add('modal-footer')
+  modalFooter.classList.add('modal-footer', 'row', 'align-items-start')
   modalFooter.style.borderTop = '1px solid #343a40'
 
   const editBtn = getEditBtn(card);
   const removeBtn = getRemoveBtn(card);
+  const readBtn = getReadBtn(card);
 
-  modalFooter.append(editBtn, removeBtn);
+  modalFooter.append(readBtn, editBtn, removeBtn);
 
   return modalFooter;
+};
+
+getReadBtn = (card) => {
+  const readBtnDiv = getReadBtnDiv();
+  const readBtn = document.createElement('button');
+  readBtn.style.margin = '3px'
+  
+  if (card.book.beenRead) {
+    readBtn.classList.add('btn', 'btn-primary')
+    readBtn.textContent = 'Book read';
+  } else {
+    readBtn.classList.add('btn', 'btn-dark')
+    readBtn.textContent = 'Not read';
+  }
+  
+  readBtn.addEventListener('click', (e) => toggleReadStatus(e, card));
+  readBtnDiv.append(readBtn);
+  return readBtnDiv;
+};
+
+getReadBtnDiv = () => {
+  const div = document.createElement('div');
+
+  div.classList.add('col-4')
+  div.style.width = '0%'
+
+  return div
 };
 
 getEditBtn = (card) => {
   const editBtn = document.createElement('button');
 
-  editBtn.classList.add('btn', 'btn-info');
+  editBtn.classList.add('btn', 'btn-info', 'col');
   editBtn.textContent = 'Edit book';
   editBtn.addEventListener('click', () => editBook(card));
   editBtn.setAttribute('data-toggle', 'modal');
   editBtn.setAttribute('data-target', '#editBookModal');
+  editBtn.style.margin = '3px'
 
   return editBtn;
 };
@@ -176,14 +205,24 @@ getRemoveBtn = (card) => {
   const removeBtn = document.createElement('button');
   
   removeBtn.addEventListener('click', () => removeBook(card));
-  removeBtn.classList.add('btn', 'btn-danger');
+  removeBtn.classList.add('btn', 'btn-danger', 'col');
   removeBtn.textContent = 'Remove book';
+  removeBtn.style.margin = '3px'
   
   return removeBtn;
 };
 
-changeReadStatus = (card) => {
-
+toggleReadStatus = (e, card) => {
+  card.book.beenRead = !card.book.beenRead;
+  if (e.target.textContent === 'Not read') {
+    e.target.textContent = 'Book read';
+    e.target.classList.remove('btn-dark')
+    e.target.classList.add('btn-primary')
+  } else {
+    e.target.textContent = 'Not read';
+    e.target.classList.remove('btn-primary');
+    e.target.classList.add('btn-dark');
+  }
 };
 
 editBook = (card) => {
