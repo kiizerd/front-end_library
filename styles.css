@@ -19,6 +19,7 @@ label {
   border: solid 1px rgb(0, 0, 0, 0.3);
   transition: border-width 0.3s linear;
   display: inline-block;
+  cursor: pointer;
 }
 
 .card:hover {
