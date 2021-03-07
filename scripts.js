@@ -7,23 +7,19 @@ let cardToEdit;
 let myLibrary = [];
 let bookCards = [];
 
-function Book(title, author, pages, beenRead = false) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.hasBeenRead = beenRead;
+const bookFactory = (title, author, pages, beenRead) => {
+  return { title, author, pages, beenRead }
 }
 
-function BookContainer(book) {
-  this.book = book
-
+const bookCardFactory = (book) => {
+  
   const newDiv = document.createElement('div');
   const bookTitle = document.createElement('h5');
   const bookAuthor = document.createElement('i');
 
   newDiv.classList.add('card', 'text-center', 'text-white', 'bg-dark', 'mb-3');
-  newDiv.setAttribute('data-toggle', 'modal');
   newDiv.setAttribute('data-target', '#bookInfoModal');
+  newDiv.setAttribute('data-toggle', 'modal');
   newDiv.append(bookTitle, bookAuthor);
   newDiv.style.margin = '2px';
 
@@ -33,11 +29,13 @@ function BookContainer(book) {
   bookAuthor.textContent = book.author;
   bookAuthor.classList.add('card-text');
   
-  this.element = newDiv;
+  const element = newDiv;
+
+  return { book, element }
 }
 
 addBookToLibrary = (book, library) => {
-  let newBookCard = new BookContainer(book)
+  let newBookCard = bookCardFactory(book);
 
   newBookCard.element.addEventListener('mousedown', () => {
     showCardModal(newBookCard);
@@ -248,9 +246,9 @@ removeBook = (card) => {
 };
 
 
-addBookToLibrary(new Book('A Song of Ice and Fire', 'George R. R. Martin', 413), myLibrary)
-addBookToLibrary(new Book('The Hobbit', 'J. R. R. Tolkien', 354), myLibrary)
-addBookToLibrary(new Book('Foundation', 'Isaac Asimov', 256), myLibrary)
+addBookToLibrary(bookFactory('A Song of Ice and Fire', 'George R. R. Martin', 413), myLibrary)
+addBookToLibrary(bookFactory('The Hobbit', 'J. R. R. Tolkien', 354), myLibrary)
+addBookToLibrary(bookFactory('Foundation', 'Isaac Asimov', 256), myLibrary)
 
 
 listBooks(myLibrary)
