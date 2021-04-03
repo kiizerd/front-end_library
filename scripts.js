@@ -52,7 +52,7 @@ getFormData = () => {
   let newBookTitle = newBookForm.elements['bookTitleInput'].value;
   let newBookAuthor = newBookForm.elements['bookAuthorInput'].value;
   let newBookNumPages = newBookForm.elements['bookNumOfPagesInput'].value;
-  let newBook = new Book(newBookTitle, newBookAuthor, newBookNumPages);
+  let newBook = bookFactory(newBookTitle, newBookAuthor, newBookNumPages);
   
   addBookToLibrary(newBook, myLibrary);
   newBookForm.reset()
