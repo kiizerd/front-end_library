@@ -1,105 +1,195 @@
 <!DOCTYPE html>
-<html lang="en" style="background-color: slategray;">
+<html lang="en" style="background-color: slategray">
+  <head>
+    <meta charset="utf-8" />
+    <title>My Library</title>
+    <link rel="icon" type="img/png" href="open-book.png" />
 
-<head>
-  <meta charset="utf-8">
-  <title>My Library</title>
-  <link rel='icon' type="img/png" href="open-book.png">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <script src="https://kit.fontawesome.com/b3985d45c7.js" crossorigin="anonymous"></script>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"> 
-  <link rel="stylesheet" href="styles.css">
-</head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=yes"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/b3985d45c7.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-<body>
+  <body>
+    <div
+      id="lib-container"
+      class="container-fluid"
+      style="background-color: slategray"
+    >
+      <header class="row" style="margin-top: 20px">
+        <div class="col-md-4">
+          <h1><i class="fas fa-book-open"></i> Library</h1>
+        </div>
+        <div class="col-md-8"></div>
+      </header>
+      <hr />
 
-  <div id="lib-container" class="container-fluid" style="background-color: slategray;">
-    <header class="row" style="margin-top: 20px;">
-      <div class="col-md-4">
-        <h1><i class='fas fa-book-open'></i> Library</h1>
+      <div id="book-card-container"></div>
+      <button
+        type="button"
+        class="btn btn-dark"
+        id="add-book-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#newBookModal"
+      >
+        Add book
+      </button>
+
+      <div id="bookInfoModal" class="modal fade">
+        <div class="modal-dialog">
+          <div
+            id="bookInfoContent"
+            class="modal-content"
+            style="background-color: rgb(112, 128, 144)"
+          ></div>
+        </div>
       </div>
-      <div class="col-md-8"></div>
-    </header>
-    <hr>
-    <div class="card-columns" id="book-card-container">
-    </div>
-    <button type="button" class="btn btn-dark" id="add-book-btn" data-toggle="modal" data-target="#newBookModal">
-      Add book</button>
-      
-    <div id="newBookModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content" style="background-color: rgb(112, 128, 144);">
-          <div class="modal-header">
-            <h4 class="modal-title">Add Book</h4>
-            <button type="button" class="close" data-dismiss="modal" style="color: black;">&times;</button>
+
+      <div
+        id="newBookModal"
+        class="modal fade"
+        tabindex="-1"
+        aria-labelledby="bookInfoModal"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div
+            class="modal-content"
+            style="background-color: rgb(112, 128, 144)"
+          >
+            <div class="modal-header">
+              <h4 class="modal-title">Add Book</h4>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form name="newBookForm" action="#">
+                <div class="form-group">
+                  <label for="bookTitleInput">Title</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="bookTitleInput"
+                    placeholder="Enter title.."
+                    required
+                    minlength="3"
+                  />
+                  <label for="bookAuthorInput">Author</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="bookAuthorInput"
+                    placeholder="Enter author.."
+                    required
+                    minlength="5"
+                  />
+                  <label for="bookNumOfPagesInput">Number of pages</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="bookNumOfPagesInput"
+                    placeholder="Enter number of pages.."
+                    required
+                    min="1"
+                    max="1337"
+                  />
+                </div>
+                <button class="btn btn-dark" id="newBookFormSubmit">
+                  Submit
+                </button>
+              </form>
+            </div>
           </div>
-          <div class="modal-body">
-            <form name="newBookForm" action="#" onsubmit="return false">
-              <div class="form-group">
-                <label for="bookTitleInput">Title</label>
-                <input type='text' class="form-control" id="bookTitleInput" placeholder="Enter title.." required=''>
-                <label for="bookAuthorInput">Author</label>
-                <input type='text' class="form-control" id="bookAuthorInput" placeholder="Enter author.." required=''>
-                <label for="bookNumOfPagesInput">Number of pages</label>
-                <input type='number' class="form-control" id="bookNumOfPagesInput" placeholder="Enter number of pages.."
-                  required=''>
-              </div>
-              <button type="submit" class="btn btn-dark" id="formSubmit" onclick="getFormData();"
-                data-dismiss="modal">Submit</button>
-            </form>
+        </div>
+      </div>
+
+      <div id="editBookModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div
+            class="modal-content"
+            style="background-color: rgb(112, 128, 144)"
+          >
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Book</h4>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form name="editBookForm" action="#">
+                <div class="form-group">
+                  <label for="editBookTitleInput">Title</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editBookTitleInput"
+                    placeholder="Enter title.."
+                    required
+                    minlength="3"
+                  />
+                  <label for="editBookAuthorInput">Author</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editBookAuthorInput"
+                    placeholder="Enter author.."
+                    required
+                    minlength="5"
+                  />
+                  <label for="editBookNumOfPagesInput">Number of pages</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="editBookPagesInput"
+                    placeholder="Enter number of pages.."
+                    required
+                    min="1"
+                    max="1337"
+                  />
+                </div>
+                <button class="btn btn-dark" id="editBookFormSubmit">
+                  Submit
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div id="bookInfoModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <div id="bookInfoContent" class="modal-content" style="background-color: rgb(112, 128, 144);">
-        </div>
-      </div>
-    </div>
-
-    <div id="editBookModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content" style="background-color: rgb(112, 128, 144);">
-          <div class="modal-header">
-            <h4 class="modal-title">Edit Book</h4>
-            <button type="button" class="close" data-dismiss="modal" style="color: black;">&times;</button>
-          </div>
-          <div class="modal-body">
-            <form name="editBookForm" action="#" onsubmit="return false">
-              <div class="form-group">
-                <label for="editBookTitleInput">Title</label>
-                <input type='text' class="form-control" id="editBookTitleInput" placeholder="Enter title.." required>
-                <label for="editBookAuthorInput">Author</label>
-                <input type='text' class="form-control" id="editBookAuthorInput" placeholder="Enter author.." required>
-                <label for="editBookNumOfPagesInput">Number of pages</label>
-                <input type='text' class="form-control" id="editBookPagesInput" placeholder="Enter number of pages.."
-                  required>
-              </div>
-              <button type="submit" class="btn btn-dark" id="editFormSubmit" onclick="getEditFormData();"
-                data-dismiss="modal">Submit</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-  <script src='scripts.js'></script>
-</body>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ"
+      crossorigin="anonymous"
+    ></script>
+    <script src="scripts.js"></script>
+  </body>
 </html>
