@@ -1,5 +1,5 @@
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 input {
@@ -9,26 +9,59 @@ input {
 label {
   margin: 1px;
 }
- 
-.card-columns {
-  orphans: 1;
-  widows: 1;
+
+#lib-container {
+  width: 100%;
+}
+
+#book-card-container {
+  display: flex;
+  justify-content: center;
+}
+
+.card-header {
+  background-color: inherit;
 }
 
 .card {
-  border: solid 1px rgb(0, 0, 0, 0.3);
-  transition: border-width 0.3s linear;
+  border: 1px solid #333;
+  padding: 1rem;
   display: inline-block;
   cursor: pointer;
+  transition: box-shadow 0.2s linear;
 }
 
 .card:hover {
-  border-width: 8px;
+  box-shadow: 3px 3px 3px 3px #454647, -2px -1px 3px 3px #6c6d6e;
 }
 
 #add-book-btn {
   position: fixed;
-  bottom: 15px;
+  top: 15px;
   right: 15px;
-  z-index: -1;
+  z-index: 1;
+}
+
+.modal-footer {
+  margin: 0;
+}
+
+@media screen and (min-width: 0) {
+  #book-card-container {
+    flex-direction: column;
+  }
+
+  .card {
+    margin: 1rem 2rem;
+  }
+}
+
+@media screen and (min-width: 866px) {
+  #book-card-container {
+    flex-direction: row;
+  }
+
+  .card {
+    margin: 0 1rem;
+  }
 }
