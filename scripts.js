@@ -293,8 +293,10 @@ forms.forEach((form) => {
         getEditFormData();
         document.getElementById("editBookModal").click();
       }
+
+      return false
     } else {
-      event.preventDefault();
+      return false
     }
   });
 });
